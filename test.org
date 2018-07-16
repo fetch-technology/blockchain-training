@@ -1,0 +1,154 @@
+* Show peers
+
+#+BEGIN_SRC http :pretty
+  GET 0.0.0.0:2300/peers
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "172.28.0.5": {
+    "address": "172.28.0.5",
+    "family": "IPv4",
+    "port": 2346,
+    "size": 5
+  },
+  "172.28.0.2": {
+    "address": "172.28.0.2",
+    "family": "IPv4",
+    "port": 2346,
+    "size": 5
+  },
+  "172.28.0.3": {
+    "address": "172.28.0.3",
+    "family": "IPv4",
+    "port": 2346,
+    "size": 5
+  },
+  "172.28.0.4": {
+    "address": "172.28.0.4",
+    "family": "IPv4",
+    "port": 2346,
+    "size": 5
+  }
+}
+#+end_example
+
+
+* Show blocks
+
+#+BEGIN_SRC http :pretty
+  GET 0.0.0.0:2200/blocks
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+[
+  {
+    "index": 0,
+    "previousHash": "",
+    "timestamp": 1522983367254,
+    "data": null,
+    "nonce": 0,
+    "hash": "e063dac549f070b523b0cb724efb1d4f81de67ea790f78419f9527aa3450f64c"
+  },
+  {
+    "index": 1,
+    "previousHash": "e063dac549f070b523b0cb724efb1d4f81de67ea790f78419f9527aa3450f64c",
+    "timestamp": 1522986166358,
+    "data": {
+      "from": "@tungd",
+      "to": "@hieu",
+      "amount": 20
+    },
+    "nonce": 650,
+    "hash": "004c29ca4b1f0294dd7a218b351394e1e2c0f216d368d8f3eab40036bf93fae9"
+  },
+  {
+    "index": 2,
+    "previousHash": "004c29ca4b1f0294dd7a218b351394e1e2c0f216d368d8f3eab40036bf93fae9",
+    "timestamp": 1522986179794,
+    "data": {
+      "from": "@tungd",
+      "to": "@yen",
+      "amount": 20
+    },
+    "nonce": 473,
+    "hash": "003a1e9b9fa46d1768a4073ef1a1dbcb7e5bc54434e5f37b97a3dc5ba835f7e8"
+  },
+  {
+    "index": 3,
+    "previousHash": "003a1e9b9fa46d1768a4073ef1a1dbcb7e5bc54434e5f37b97a3dc5ba835f7e8",
+    "timestamp": 1522986184781,
+    "data": {
+      "from": "@tungd",
+      "to": "@trung",
+      "amount": 20
+    },
+    "nonce": 208,
+    "hash": "0073322a611acafb1cf0c2cb099124faa1ea6eae3cc118e64d938a8816660f9a"
+  },
+  {
+    "index": 4,
+    "previousHash": "0073322a611acafb1cf0c2cb099124faa1ea6eae3cc118e64d938a8816660f9a",
+    "timestamp": 1522986232785,
+    "data": {
+      "from": "@tungd",
+      "to": "@trung",
+      "amount": 10
+    },
+    "nonce": 103,
+    "hash": "00f3758a1dbbf9730f2bac64f2fd920e1e696497eae8634891f067ec13a7389e"
+  },
+  {
+    "index": 5,
+    "previousHash": "00f3758a1dbbf9730f2bac64f2fd920e1e696497eae8634891f067ec13a7389e",
+    "timestamp": 1522986235784,
+    "data": {
+      "from": "@tungd",
+      "to": "@hieu",
+      "amount": 10
+    },
+    "nonce": 129,
+    "hash": "00646565267b5e15bf8f6d900e7fb208be04f5cac11597bbfc5cba2fda4d3ca6"
+  },
+  {
+    "index": 6,
+    "previousHash": "00646565267b5e15bf8f6d900e7fb208be04f5cac11597bbfc5cba2fda4d3ca6",
+    "timestamp": 1522986238160,
+    "data": {
+      "from": "@tungd",
+      "to": "@yen",
+      "amount": 10
+    },
+    "nonce": 296,
+    "hash": "002492d5c8b8e2a111288a093a7f22bb356f74ff3df1d213e9bf8ff149327c3a"
+  }
+]
+#+end_example
+
+
+* Process transactions
+
+#+BEGIN_SRC http :pretty
+  POST 0.0.0.0:2200/transactions
+  Content-Type: application/json
+
+  {"from":"@tungd","to":"@yen","amount":10}
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+{
+  "index": 6,
+  "previousHash": "00646565267b5e15bf8f6d900e7fb208be04f5cac11597bbfc5cba2fda4d3ca6",
+  "timestamp": 1522986238160,
+  "data": {
+    "from": "@tungd",
+    "to": "@yen",
+    "amount": 10
+  },
+  "nonce": 296,
+  "hash": "002492d5c8b8e2a111288a093a7f22bb356f74ff3df1d213e9bf8ff149327c3a"
+}
+#+end_example

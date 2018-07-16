@@ -1,0 +1,17 @@
+version: '3'
+services:
+  node:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    networks:
+      default: {}
+    ports:
+      - 2200-2300:2345
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
