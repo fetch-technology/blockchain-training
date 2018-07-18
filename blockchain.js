@@ -54,6 +54,7 @@ class Server {
   constructor() {
     this.blocks = [Block.GENESIS]
     this.peers = {}
+    this.state = {}
 
     this.peerServer = dgram.createSocket('udp4')
     this.peerServer.on('listening', this.onPeerServerListening.bind(this))
@@ -100,10 +101,14 @@ class Server {
   showBlocks(req, resp) { resp.json(this.blocks) }
 
   processTransaction(req, resp) {
+
     // - Verify signature
     // - Verify balance
 
     // - Current block
+    // if (!this.currentBlock) {
+    //   this.currentBlock = Block.fromPrevious(Block.GENESIS)
+    // }
     // - Add transaction to block
     this.currentBlock.data.push(transaction)
 
