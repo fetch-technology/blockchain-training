@@ -22,7 +22,10 @@ class Block {
   }
 
   calculateHash() {
-    // TODO
+    const { hash, ...data } = this
+    return crypto
+      .createHmac('sha256', JSON.stringify(data))
+      .digest('hex')
   }
 
   static get GENESIS() {
@@ -78,22 +81,65 @@ class Server {
       `Peer discovery server started at ${address.address}:${address.port}.`
     )
 
-    // TODO: broadcast the message to all the peers
+    this.peerServer.setBroadcast(true)
+
+    const message = new Buffer('hello')
+    setInterval(_ => {
+      this.peerServer.send(message, 0, message.length, address.port, '172.28.0.0')
+    }, 1000)
   }
 
   onPeerMessage(message, remote) {
-    // TODO: handle message from peers
+    if (this.peers[remote.address]) return
+
+    this.peers[remote.address] = remote
+    console.log(`Peer discovered: ${remote.address}:${remote.port}`)
   }
 
   showPeers(req, resp) { resp.json(this.peers) }
   showBlocks(req, resp) { resp.json(this.blocks) }
 
   processTransaction(req, resp) {
-    // TODO
+    // - Verify signature
+    // - Verify balance
+
+    // - Current block
+    // - Add transaction to block
+    this.currentBlock.data.push(transaction)
+
+    // Response
+
+    // - Check if we have waited for 30 seconds
+    // - Proof-of-work
+    while (!this.currentBlock.hash.startsWith('000')) {
+      this.currentBlock.nonce += 1
+      this.currentBlock.hash = this.currentBlock.calculateHash()
+    }
+
+    this.blocks.push(this.currentBlock)
+
+    Object.keys(this.peers).forEach(address => {
+      // POST /blocks
+    })
+
+    this.currentBlock = Block.fromPrevious(this.currentBlock)
   }
 
   processBlocks(req, resp) {
     // TODO
+    // block.hash.startsWith('000')
+    // block.hash === block.calculateHash()
+    // block.previousHash === this.blocks[block.index - 1].hash
+
+    // block.index > lastOf(this.blocks).index
+
+    this.blocks.push(block)
+  }
+
+  createAccount(req, resp) {
+    // TODO
+    // - Generate key pair based on password
+    // - Response
   }
 }
 
